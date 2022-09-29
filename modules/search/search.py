@@ -47,5 +47,12 @@ class Arc(object):
             return str(self.from_node)+' --> '+str(self.to_node)
         
 
-a = Arc(0,12,action='buy')
-print(a)
+nodes = ['a','b','c','d','e','f']
+arcs = [
+    Arc('a','b',1),
+    Arc('a','c',1),
+    Arc('b','f',1),
+    Arc('c','e',1),
+    Arc('b','c',1),
+    Arc('e','f',1)
+]
