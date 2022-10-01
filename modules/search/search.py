@@ -1,8 +1,5 @@
-from cmath import cos
-from turtle import position
 
-
-class Search_problem(object):
+class search_problem_from_explicit_graph(object):
     """
     A serach problem consits of :
     # a list of nodes
@@ -11,26 +8,15 @@ class Search_problem(object):
     # a dictionary that map each noe into its heuristic value
     # a dictionary that maps each node into its(x,y) position
     """
-    def __init__(self,nodes, arcs, start=None, positions = {}):
-        self.position = position
-        self.neighs = {}
+    def __init__(self,nodes,start=None,):
         self.nodes = nodes
-        for node in nodes:
-            self.neighs[node] = []
-        for arc in arcs:
-            self.neighs[arc.from_node].append(arc)
+        self.start = start
 
     def start_node(self):
         return self.start
 
-    def is_goal(self):
-        pass
-
-    def neighbors(self, node):
-        pass
-
-    def heuristic(self, n):
-        return 0
+    def __repr__(self):
+        return self.start
 
 
 class Arc(object):
@@ -40,6 +26,7 @@ class Arc(object):
         self.to_node = to_node
         self.action = action
         self.cost = cost
+
     def __repr__(self):
         if self.action:
             return str(self.from_node)+ '--'+str(self.action)+'-->'+str(self.to_node)
@@ -47,12 +34,20 @@ class Arc(object):
             return str(self.from_node)+' --> '+str(self.to_node)
         
 
-nodes = ['a','b','c','d','e','f']
-arcs = [
-    Arc('a','b',1),
-    Arc('a','c',1),
-    Arc('b','f',1),
-    Arc('c','e',1),
-    Arc('b','c',1),
-    Arc('e','f',1)
-]
+class Path(object):
+    """A path is either a node or a path followed by and arc"""
+
+    def __init__(self, initial, arc=None):
+        self.initial = initial
+        self.arc = arc
+        if arc is None:
+            self.cost = 0
+        else:
+            self.cost = initial.cost + arc.cost
+
+    def end(self):
+        """returns the node at the end of the path"""
+        if self.arc is None:
+            return self.initial
+        else:
+            return self.arc.to_node
