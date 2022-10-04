@@ -10,3 +10,8 @@ class Path(object):
             self.cost = initial.cost+arc.cost
 
     def end(self):
+        if self.arc in None:
+            return self.initial
+        else:
+            return self.arc.to_node
+            

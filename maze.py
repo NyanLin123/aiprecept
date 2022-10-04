@@ -1,13 +1,21 @@
-from modules.search.search import *
+class Node():
+    def __init__(self, state, parent, action):
+        self.state = state
+        self.parent = parent
+        self.action = action
 
-nodes = ['a','b','c','d','e','f']
-arcs = [
-    Arc('a','b',1),
-    Arc('a','c',1),
-    Arc('b','f',1),
-    Arc('c','e',1),
-    Arc('b','c',1),
-    Arc('e','f',1)
-]
-a = Search_problem('a','b')
-p1 = search_problem_from_explicit_graph()
+class StackFrontier():
+    def __init__(self):
+        self.frontier = []
+
+    def add(self, node):
+        self.frontier.append(node)
+
+    def empty(self):
+        return len(self.frontier)==0
+
+    def remove(self):
+        if self.empty():
+            raise Exception("Empty frontier")
+        else:
+            self.frontier[0]

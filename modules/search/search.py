@@ -21,7 +21,7 @@ class TP_env():
     def initial_precepts(self):
         """return initial percept"""
         self.stock_history.append(self.stock)
-        price = self.prices[0]+random.randrange()
+        price = self.prices[0]+random.randrange(self.max_price_addon)
         return price
 tp = TP_env()
 print(tp.initial_precepts())
