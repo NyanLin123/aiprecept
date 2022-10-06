@@ -1,21 +1,41 @@
-class Node():
-    def __init__(self, state, parent, action):
-        self.state = state
-        self.parent = parent
-        self.action = action
+class Node(object):
+    def __init__(self, start, board, goal={}):
+        self.start = start
+        self.goal = goal
+        self.board = board
 
-class StackFrontier():
+    def get_direction(self):
+        left = self.start + 1
+        right = self.start - 1
+        return left
+        
+    def go():
+        pass
+
+    def is_goal(self):
+        return self.start
+
+class StackFrontier(object):
+    """
+    Stack node
+    """
     def __init__(self):
         self.frontier = []
 
-    def add(self, node):
+    def add_frontier(self, node):
         self.frontier.append(node)
 
-    def empty(self):
-        return len(self.frontier)==0
-
-    def remove(self):
-        if self.empty():
-            raise Exception("Empty frontier")
+    def remove(self, node):
+        if not node in self.frontier:
+            raise Exception("No Node it")
         else:
-            self.frontier[0]
+            new_node = self.frontier[-1]
+            self.frontier = self.frontier[1:]
+            return self.frontier
+
+board= {
+    'a':['b','c'],
+    'b':['c','d']
+}
+start = 'a'
+goals = 'b'
