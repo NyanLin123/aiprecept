@@ -8,7 +8,7 @@ class Node(object):
         left = self.start + 1
         right = self.start - 1
         return left
-        
+
     def go():
         pass
 
@@ -33,9 +33,7 @@ class StackFrontier(object):
             self.frontier = self.frontier[1:]
             return self.frontier
 
-board= {
-    'a':['b','c'],
-    'b':['c','d']
-}
-start = 'a'
-goals = 'b'
+def maze(file):
+    with open(file, 'wt') as f:
+        print(f)
+
