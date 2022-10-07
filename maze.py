@@ -1,3 +1,5 @@
+import sys
+
 class Node(object):
     def __init__(self, start, board, goal={}):
         self.start = start
@@ -33,7 +35,25 @@ class StackFrontier(object):
             self.frontier = self.frontier[1:]
             return self.frontier
 
-def maze(file):
-    with open(file, 'wt') as f:
-        print(f)
+def search_node(move_node ,start_node, end_node, c=0):
+    """
+    produce: start_node and goal_node's index
+    """
+    if len(move_node)>=1:
+        if move_node[0] == start_node:
+            return c
+        else:
+            c += 1
+            return search_node(move_node[1:], start_node, end_node, c=c)
+    else:
+        return Exception("no node hasn't")
 
+def main():
+    board = ''
+    with open(sys.argv[1],'rt') as f:
+        board +=f.read()
+    f.close()
+    return print(search_node(board,'A','B'))
+
+if __name__=='__main__':
+    main()
