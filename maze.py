@@ -12,7 +12,7 @@ class Node(object):
     def go(self):
         return self.start
 
-    def way_decision(self, i_start):
+    def way_decision(self, i_node):
         """
         to find four passible direction
         """
@@ -22,7 +22,7 @@ class Node(object):
                 pass
             else:
                 return find_ways(ind-1)
-        return self.board[i_start]
+        return self.board[i_node]
 
     def is_goal(self):
         return self.start
@@ -59,14 +59,14 @@ def search_node(move_node ,node, c=0):
     """
     produce: node index
     """
-    if len(move_node)>=1:
-        if move_node[0] == node:
-            return c
-        else:
-            c += 1
-            return search_node(move_node[1:], node, c=c)
+    if move_node[0] == node:
+        return c
     else:
-        return Exception("no node hasn't")
+        new_node = move_node[1:]
+        if len(new_node) >= 1:
+            return search_node(new_node, node, c + 1)
+        else:
+            return 'Did not found any node'
 
 def collect_string(board):
     result = ''
@@ -75,25 +75,12 @@ def collect_string(board):
     return result
 
 def main(start_node, goal_node):
-
-    board = []
+    board = ''
     with open(sys.argv[1],'rt') as f:
-        result = ''
-        for i in f.read():
-            if i == '\n':
-                board.append(result)
-                result = ''
-            else:
-                result += i
+        board = f.read()
+    
     f.close()
-    string_board = collect_string(board)
-    i_start = search_node(string_board, start_node)
-    i_goal = search_node(string_board, goal_node)
-
-    n = Node(start_node, goal_node, string_board)
-    print(n.way_decision(i_start))
-    # print(len(board))
-    # nodes = {start_node:i_start,goal_node:i_goal}
+    print(len(board))
 
 if __name__=='__main__':
     main('A','B')
