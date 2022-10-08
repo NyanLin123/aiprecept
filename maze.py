@@ -74,13 +74,36 @@ def collect_string(board):
         result += i
     return result
 
+def seperator(b):
+    """
+    produce len(b) + 1 to cut the line
+    """
+    count = 1
+    for i in b:
+        if i == '\n':
+            count += 1
+    return count
+
+def list_string(b):
+    result = ''
+    for i in b:
+        result += i
+    return result
+
 def main(start_node, goal_node):
-    board = ''
+    board = []
     with open(sys.argv[1],'rt') as f:
-        board = f.read()
-    
-    f.close()
-    print(len(board))
+        for i in f.read():
+            board.append(i)
+    board_str = list_string(board)
+
+    f.close()       
+
+    i_start = search_node(board_str, start_node)
+    i_goal = search_node(board_str, goal_node)
+
+    node = Node(start_node, goal_node, board)
+    print(i_goal)
 
 if __name__=='__main__':
     main('A','B')
