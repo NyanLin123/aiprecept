@@ -30,18 +30,34 @@ def search_index(board, node, c=0):
         else:
             return search_index(board[1:], node, c+1)
 
+def guess_row(board, index, count_each_row = 0, previous_len = 0):
+    if len(board[count_each_row]) > index:
+        previous_len = len(board[count_each_row])
+
+        return previous_len
+    else:
+        return board[0]
+
 def look_up_down(board, index_node):
+    """
+    I need to refile it
+    """
     return board
+
 def main(start_node, goal_node):
     file_caller = sys.argv[1]
     result = ''
     with open(file_caller, 'rt') as f:
         for i in f.read():
             result += i
-    rebuild_board = rearrange_list(result,'str')
-    i_goal=search_index(rebuild_board, goal_node)
-    i_start=search_index(rebuild_board, start_node)
-    print(i_start, i_goal)
+
+    rebuild_board_str = rearrange_list(result,'str')
+    rebuild_board_list = rearrange_list(result)
+
+    i_goal=search_index(rebuild_board_str, goal_node)
+    i_start=search_index(rebuild_board_str, start_node)
+
+    print(guess_row(rebuild_board_list, i_goal))
 
 if __name__=='__main__':
     main('A','B')
