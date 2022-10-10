@@ -30,19 +30,28 @@ def search_index(board, node, c=0):
         else:
             return search_index(board[1:], node, c+1)
 
-def guess_row(board, index, count_each_row = 0, previous_len = 0):
-    if len(board[count_each_row]) > index:
-        previous_len = len(board[count_each_row])
+def produce_col(n,l):
+    c = 0
+    for i in l:
+        c += 1
+        if i == n:
+            return c
 
-        return previous_len
-    else:
-        return board[0]
+def search_row(board, node):
+    row = 0
+    for i in board:
+        row += 1
+        if node in i:
+            return (row,produce_col(node, i))
 
-def look_up_down(board, index_node):
+def look_up_down(board,node):
     """
-    I need to refile it
+    breath up and down 'lastest update'
     """
-    return board
+    row, col = search_row(board, node)
+    up = board[row-2][col-1]
+    down = board[row][col-1]
+    return (up, down)
 
 def main(start_node, goal_node):
     file_caller = sys.argv[1]
@@ -57,7 +66,8 @@ def main(start_node, goal_node):
     i_goal=search_index(rebuild_board_str, goal_node)
     i_start=search_index(rebuild_board_str, start_node)
 
-    print(guess_row(rebuild_board_list, i_goal))
+    print(look_up_down(rebuild_board_list, start_node))
+    print(search_row(rebuild_board_list, start_node))
 
 if __name__=='__main__':
     main('A','B')
