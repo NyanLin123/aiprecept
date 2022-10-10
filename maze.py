@@ -1,5 +1,25 @@
 import sys
 
+class Node(object):
+    def __init__(self, board):
+        self.board = board
+    
+    def collect_dir(self, node):
+        """return left, right, up, down"""
+        pass
+    
+    def breath_dir(self, node):
+        """
+        return one direction of node
+        """
+        pass
+
+    def go(self):
+        pass
+
+    def __repr__(self):
+        return 'value for direction'
+
 def rearrange_list(boa,typeOflist=None):
     """
     none: to produce list type
@@ -62,9 +82,6 @@ def main(start_node, goal_node):
 
     rebuild_board_str = rearrange_list(result,'str')
     rebuild_board_list = rearrange_list(result)
-
-    i_goal=search_index(rebuild_board_str, goal_node)
-    i_start=search_index(rebuild_board_str, start_node)
 
     print(look_up_down(rebuild_board_list, start_node))
     print(search_row(rebuild_board_list, start_node))
