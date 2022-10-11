@@ -1,24 +1,62 @@
 import sys
 
 class Node(object):
-    def __init__(self, board):
+    def __init__(self, board, start_node):
         self.board = board
+        self.dir_coll = {}
+        self.start_node = start_node
+        self.express_index()
+        self.inc = -1
     
-    def collect_dir(self, node):
+    def move_another(self, indicator):
+        """move left right up down"""
+        if indicator == 'l':
+            return 'arrow'
+        elif indicator=='r':
+            return 'pinneapple'
+        elif indicator=='u':
+            return 'sweet'
+        elif indicator=='d':
+            return 'colar'
+        else:
+            return 'noting'
+
+    def move_node(self,a):
+        if a == 'l':
+            return {'col':self.start_node['col'], 'row':self.start_node['row']}
+        else:
+            return self.dir_coll
+
+    def breath_next_node(self, initial_node, c=0):
         """return left, right, up, down"""
-        pass
+        if self.board[initial_node['row']] [initial_node['col']] == ' ':
+            return initial_node
+        else:
+            indicator = ['l','r','u','d']
+            
+            return self.move_node(indicator[c])
     
-    def breath_dir(self, node):
+    def express_index(self):
         """
         return one direction of node
         """
-        pass
-
+        if len(self.board) > 0:
+            row = -1
+            for i in self.board:
+                row += 1
+                if self.start_node in i:
+                    col = -1
+                    for a in i:
+                        col += 1
+                        if a == self.start_node:
+                            self.dir_coll['col']=col
+                    self.dir_coll['row']=row
+        
     def go(self):
-        pass
+        return self.breath_next_node(self.dir_coll)
 
     def __repr__(self):
-        return 'value for direction'
+        return self.breath_next_node(self.dir_coll)
 
 def rearrange_list(boa,typeOflist=None):
     """
@@ -83,8 +121,9 @@ def main(start_node, goal_node):
     rebuild_board_str = rearrange_list(result,'str')
     rebuild_board_list = rearrange_list(result)
 
-    print(look_up_down(rebuild_board_list, start_node))
-    print(search_row(rebuild_board_list, start_node))
+    #connect with node class
+    node = Node(rebuild_board_list, start_node)
+    print(node.go())
 
 if __name__=='__main__':
     main('A','B')
