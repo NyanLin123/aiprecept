@@ -6,6 +6,7 @@ class Node(object):
         self.dir_coll = {}
         self.start_node = start_node
         self.express_index()
+        self.buffer_node = []
 
     def move_node(self, ind):
         col = self.dir_coll['col']
@@ -25,6 +26,9 @@ class Node(object):
         
         else:
             return self.dir_coll
+
+    def limitation(self):
+        return 'some limitation'
 
     def breath_next_node(self, initial_node, c=0):
         """return left, right, up, down"""
@@ -52,7 +56,17 @@ class Node(object):
                     self.dir_coll['row']=row
         
     def go(self):
-        return self.breath_next_node(self.dir_coll)
+        """
+        continue to go continuously
+        """
+        row = self.breath_next_node(self.dir_coll)['row']
+        col = self.breath_next_node(self.dir_coll)['col']
+        if self.board[row][col] == ' ':
+            #need to countiuse
+            return row
+        
+        else:
+            return False
 
     def __repr__(self):
         return self.breath_next_node(self.dir_coll)
@@ -78,38 +92,6 @@ def rearrange_list(boa,typeOflist=None):
     elif typeOflist == None:
         return res        
 
-def search_index(board, node, c=0):
-    if board[0] == node:
-        return c
-    else:
-        if len(board) == 1:
-            return search_index(board[0], node, c+1)
-        else:
-            return search_index(board[1:], node, c+1)
-
-def produce_col(n,l):
-    c = 0
-    for i in l:
-        c += 1
-        if i == n:
-            return c
-
-def search_row(board, node):
-    row = 0
-    for i in board:
-        row += 1
-        if node in i:
-            return (row,produce_col(node, i))
-
-def look_up_down(board,node):
-    """
-    breath up and down 'lastest update'
-    """
-    row, col = search_row(board, node)
-    up = board[row-2][col-1]
-    down = board[row][col-1]
-    return (up, down)
-
 def main(start_node, goal_node):
     file_caller = sys.argv[1]
     result = ''
@@ -121,7 +103,7 @@ def main(start_node, goal_node):
     rebuild_board_list = rearrange_list(result)
 
     #connect with node class
-    node = Node(rebuild_board_list, start_node)
+    node = Node(rebuild_board_list, goal_node)
     print(node.go())
 
 if __name__=='__main__':
