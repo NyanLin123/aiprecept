@@ -6,24 +6,23 @@ class Node(object):
         self.dir_coll = {}
         self.start_node = start_node
         self.express_index()
-        self.inc = -1
-    
-    def move_another(self, indicator):
-        """move left right up down"""
-        if indicator == 'l':
-            return 'arrow'
-        elif indicator=='r':
-            return 'pinneapple'
-        elif indicator=='u':
-            return 'sweet'
-        elif indicator=='d':
-            return 'colar'
-        else:
-            return 'noting'
 
-    def move_node(self,a):
-        if a == 'l':
-            return {'col':self.start_node['col'], 'row':self.start_node['row']}
+    def move_node(self, ind):
+        col = self.dir_coll['col']
+        row = self.dir_coll['row']
+
+        if ind == 'l':
+            return {'row':row,'col':col+1}
+        
+        elif ind == 'r':
+            return {'row':row, 'col':col-1}
+
+        elif ind == 'u':
+            return {'row':row+1, 'col':col}
+
+        elif ind == 'd':
+            return {'row':row-1, 'col':col}
+        
         else:
             return self.dir_coll
 
@@ -32,9 +31,9 @@ class Node(object):
         if self.board[initial_node['row']] [initial_node['col']] == ' ':
             return initial_node
         else:
-            indicator = ['l','r','u','d']
-            
-            return self.move_node(indicator[c])
+            ind = ['l','r','u','d']
+            if c < 4:
+                return self.breath_next_node(self.move_node(ind[c]), c+1)
     
     def express_index(self):
         """
