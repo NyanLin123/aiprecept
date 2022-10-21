@@ -41,7 +41,45 @@ def breath_next_node(board, node_index, count = 0):
     else:
         return 'did not found anything'
 
+class Action():
+    """action for node """
+    def __init__(self, main_board, initial, goal):
+        self.initial = initial
+        self.goal = goal
+        self.board = main_board
 
+        self.path = []
 
+    def is_goal(self, node_index):
+        return self.goal == node_index
+    
+    def check_repeat_node(self,now_node):
+        return now_node in self.path
+            
+    
+    def serve(self, initial_node_index):
+        self.path.append(initial_node_index)
+        change_node = breath_next_node(self.board,initial_node_index)            
+        if  not self.check_repeat_node(change_node):
+            self.serve(change_node)
+        else:
+            return 'break the code'
+            
+        
+    def __repr__(self):
+        result = ''
+        print(len(self.path))
+        if len(self.path) >= 0:
+            for i in self.path:
+                result += str(i)
+            return result
+        else:
+            return None
 
+class Display(object):
 
+    def __init__(self, path):
+        self.path = path
+    
+    def __repr__(self):
+        return 'hello'

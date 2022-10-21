@@ -1,8 +1,14 @@
-from extract_file import produce_board, index_node, breath_next_node
+from extract_file import Action, produce_board, index_node, breath_next_node
 import sys
 
 board = produce_board(sys.argv[1])
-index_node = index_node(board, 'A')
+initial_node = 'A'
+final_goal = 'B'
+initial_index = index_node(board, initial_node)
+goal_index = index_node(board, final_goal)
 
-print(breath_next_node(board, index_node))
+act = Action(board, initial_node, goal_index)
 
+
+act.serve(initial_index)
+print(act)
