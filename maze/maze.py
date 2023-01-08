@@ -13,6 +13,5 @@ act = Action(board, initial_node, goal_index)
 act.serve(initial_index)
 print(act)
 print('i am another person')
-
-
 print('another file for testing')
+main
